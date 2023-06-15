@@ -21,3 +21,4 @@ Herramientas Utiizadas: Usando la biblioteca Pygame para haver la interfaz grafi
 Guia de Instalacion: Ingresar por el sisbolo de sistema y ejecutar el comando que trae  para descargar la librerias correspondientes.
 
 link video: https://drive.google.com/file/d/1kTrGbOm4-Irb7gzSPNPSjbuYm-F_3kxN/view?usp=drive_link
+link Imagen al ejecutar el codigo, (En la grabacion no mostraba la ejecucion del codigo): https://drive.google.com/file/d/1wbVg3jmlSZeUSRrGfx9cVc-BWwB8A0gm/view?usp=drive_link
