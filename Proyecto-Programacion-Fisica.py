@@ -2,6 +2,7 @@ import pygame
 from pygame.locals import *
 import tkinter as tk
 from tkinter import messagebox
+import matplotlib as plt
 
 # Inicializar pygame
 pygame.init()
@@ -80,7 +81,7 @@ while running:
     
     boton1 = pygame.Rect(130, 193, 100, 50) #PRIMER BOTON
     pygame.draw.rect(ventana, color2, boton1)
-    
+    mouse_pos = pygame.mouse.get_pos()
     boton2 = pygame.Rect(480, 193, 100, 50) #SEGUNDO BOTON
     pygame.draw.rect(ventana, color2, boton2)
     
@@ -89,37 +90,31 @@ while running:
     
     # Obtener las coordenadas del ratón
     mouse_pos = pygame.mouse.get_pos()
-
+#-----------------------------------------------------------------------------------
     # Verificar si el ratón está sobre el botón en la sección 1 y si se hace clic
     if boton1.collidepoint(mouse_pos) and pygame.mouse.get_pressed()[0]:
-        # Crear una ventana de Tkinter
         ventana_tk1 = tk.Toplevel()
-        
-        # Función para obtener el texto ingresado
-        def obtener_texto1():
-            texto1 = cuadro_texto1.get()
-            print("Tiempo Ingresado:", texto1)
+    #funcion para boton...
+        def obtener_tiempo():
+            tiempo= cuadro_texto1.get()
+            print("tiempo ingresado:", tiempo)
+            velocidad = gravity * int(tiempo)
+            print('velociad calculada:', velocidad)
             ventana_tk1.destroy()
-        
-        # Crear un cuadro de texto
         cuadro_texto1 = tk.Entry(ventana_tk1)
         cuadro_texto1.pack()
-
-        # Crear un botón para obtener el texto ingresado
-        boton_tk1 = tk.Button(ventana_tk1, text="Ingresar Tiempo", command=obtener_texto1)
-        boton_tk1.pack()
-
-        # Ejecutar el bucle principal de Tkinter
-        ventana_tk1.mainloop()
     
-    if boton2.collidepoint(mouse_pos) and pygame.mouse.get_pressed()[0]:
-        # Crear una ventana de Tkinter
-        ventana_tk2 = tk.Toplevel()
+        boton_tiempo=tk.Button(ventana_tk1, text='ingrese Tiempo',command=obtener_tiempo)
+        ventana_tk1.mainloop(ventana_tk1)
         
+#----------------------------------------------------------------------------------------------
+
+    if boton2.collidepoint(mouse_pos) and pygame.mouse.get_pressed()[0]:
+        ventana_tk2 = tk.Toplevel()        
         # Función para obtener el texto ingresado
         def obtener_texto2():
-            texto2 = cuadro_texto2.get()
-            print("Altura ingresada:", texto2)
+            ventana_tk2 = cuadro_texto2.get()
+            print("Altura ingresada:", ventana_tk2)
             ventana_tk2.destroy()
         
         # Crear un cuadro de texto
@@ -133,6 +128,8 @@ while running:
         # Ejecutar el bucle principal de Tkinter
         ventana_tk2.mainloop()
         
+#-----------------------------------------------------------------------------------------------
+
     if boton3.collidepoint(mouse_pos) and pygame.mouse.get_pressed()[0]:
         # Crear una ventana de Tkinter
         ventana_tk3 = tk.Toplevel()
