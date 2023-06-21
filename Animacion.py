@@ -16,7 +16,7 @@ y = 0
 
 # Velocidad y aceleración
 speed = 0
-acceleration = 0.5
+acceleration = 0.2
 
 # Bucle principal del juego
 while True:
