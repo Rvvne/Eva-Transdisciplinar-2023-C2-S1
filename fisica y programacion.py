@@ -1,81 +1,163 @@
-import pygame
-from tkinter import *
-from tkinter import ttk
+import tkinter as tk
+import time
+import matplotlib.pyplot as plt
 
-# Configuración de la ventana Tkinter
-root = Tk()
-root.title("Simulación de caída libre")
+# Dimensiones de la ventana
+ANCHO = 800
+ALTO = 600
 
-# Variables
-velocidad_inicial = 0
-tiempo = 0
-gravedad = 9.8
-altura = 0
-movimiento = False
+# Aceleración debido a la gravedad
+GRAVEDAD = 9.8
 
-# Función para iniciar la simulación
-def iniciar_simulacion():
-    global velocidad_inicial, tiempo, gravedad, altura, movimiento
-    velocidad_inicial = float(entry_velocidad.get())
-    tiempo = 0
-    altura = 0
-    movimiento = True
+class Pelota:
+    def __init__(self, lienzo, velocidad, alturas, vel_inicial, tiempos):
+        self.lienzo = lienzo
+        self.radio = 20
+        self.x = ANCHO // 2
+        self.y = 0
+        self.velocidad = velocidad
+        self.tiempo_inicio = None
+        self.alturas = alturas
+        self.vel_inicial = vel_inicial
+        self.tiempos = tiempos
+        self.dibujar()
 
-# Función para detener la simulación
-def detener_simulacion():
-    global movimiento
-    movimiento = False
+    def dibujar(self):
+        self.lienzo.create_oval(self.x - self.radio, self.y - self.radio, self.x + self.radio, self.y + self.radio, fill="red", outline="white", width=2)
 
-# Función para actualizar la altura y el tiempo en cada iteración de la simulación
-def actualizar_simulacion():
-    global velocidad_inicial, tiempo, gravedad, altura
-    tiempo += 0.1
-    altura = velocidad_inicial * tiempo - 0.5 * gravedad * tiempo**2
+    def actualizar(self):
+        if self.tiempo_inicio is None:
+            self.tiempo_inicio = time.time()
 
-# Función para dibujar la simulación en la ventana de pygame
-def dibujar_simulacion():
-    pygame.draw.circle(screen, (255, 255, 255), (250, int(250 - altura)), 10)  # Dibujar la bola
-    pygame.display.flip()
+        tiempo_actual = time.time()
+        tiempo_transcurrido = tiempo_actual - self.tiempo_inicio
 
-# Función para manejar los eventos de cierre de la ventana de pygame
-def cerrar_ventana():
-    pygame.quit()
+        self.y = -1 * (self.vel_inicial * tiempo_transcurrido - 0.5 * GRAVEDAD * tiempo_transcurrido ** 2)
+        self.alturas.append(self.y)
+        self.velocidad = -(self.vel_inicial - GRAVEDAD * tiempo_transcurrido)
+        self.tiempos.append(tiempo_transcurrido)
 
-# Configuración de la ventana de pygame
-pygame.init()
-screen = pygame.display.set_mode((500, 500))
-pygame.display.set_caption("Simulación de caída libre")
-clock = pygame.time.Clock()
+        if self.y >= ALTO - self.radio:
+            self.y = ALTO - self.radio
+            self.detener()
 
-# Configuración de la ventana Tkinter
-frame = ttk.Frame(root, padding="20")
-frame.grid()
+        self.lienzo.delete("all")
+        self.dibujar()
 
-# Etiquetas y campos de entrada
-label_velocidad = ttk.Label(frame, text="Velocidad inicial:")
-label_velocidad.grid(column=0, row=0)
-entry_velocidad = ttk.Entry(frame)
-entry_velocidad.grid(column=1, row=0)
+    def detener(self):
+        app.en_ejecucion = False
+        app.actualizar_botones()
+        plt.figure()
+        plt.plot(self.tiempos, self.alturas, label="Altura")
+        plt.xlabel("Tiempo (s)")
+        plt.ylabel("Altura (m)")
+        plt.title("Caída Libre")
+        plt.legend()
+        plt.gca().invert_yaxis()  # Invertir eje Y para mostrar caída libre hacia abajo
+        plt.show()
 
-# Botón de iniciar simulación
-boton_iniciar = ttk.Button(frame, text="Iniciar simulación", command=iniciar_simulacion)
-boton_iniciar.grid(column=0, row=1)
 
-# Botón de detener simulación
-boton_detener = ttk.Button(frame, text="Detener simulación", command=detener_simulacion)
-boton_detener.grid(column=1, row=1)
+class App:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Caída Libre")
 
-# Bucle principal
-while True:
-    root.update()  # Actualizar la ventana Tkinter
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            cerrar_ventana()
+        self.lienzo = tk.Canvas(self.root, width=ANCHO, height=ALTO, bg="#0D47A1")
+        self.lienzo.pack(side=tk.LEFT)
 
-    if movimiento and tiempo < 2 * velocidad_inicial / gravedad:
-        actualizar_simulacion()
-        screen.fill((0, 0, 0))  # Limpiar la pantalla antes de dibujar la siguiente posición
-        dibujar_simulacion()
-        clock.tick(60)  # Limitar el número de fotogramas por segundo
+        self.marco = tk.Frame(self.root, bg="#E3F2FD", padx=20, pady=20)
+        self.marco.pack(side=tk.LEFT)
+
+        self.velocidad = 0
+        self.pelota = None
+        self.alturas = []
+        self.vel_inicial = 0
+        self.tiempos = []
+
+        self.etiqueta_velocidad = tk.Label(self.marco, text="Velocidad: 0 m/s", font=("Arial", 12), bg="#E3F2FD", fg="#1A237E")
+        self.etiqueta_velocidad.pack()
+
+        self.etiqueta_altura = tk.Label(self.marco, text="Altura: 0 m", font=("Arial", 12), bg="#E3F2FD", fg="#1A237E")
+        self.etiqueta_altura.pack()
+
+        self.etiqueta_tiempo = tk.Label(self.marco, text="Tiempo: 0 s", font=("Arial", 12), bg="#E3F2FD", fg="#1A237E")
+        self.etiqueta_tiempo.pack()
+
+        self.entrada_velocidad = tk.Entry(self.marco, font=("Arial", 12))
+        self.entrada_velocidad.pack()
+        self.boton_velocidad = tk.Button(self.marco, text="Ajustar Velocidad", command=self.ajustar_velocidad, bg="#1565C0", fg="white")
+        self.boton_velocidad.pack()
+
+        self.entrada_altura = tk.Entry(self.marco, font=("Arial", 12))
+        self.entrada_altura.pack()
+        self.boton_altura = tk.Button(self.marco, text="Ajustar Altura", command=self.ajustar_altura, bg="#1565C0", fg="white")
+        self.boton_altura.pack()
+
+        self.entrada_tiempo = tk.Entry(self.marco, font=("Arial", 12))
+        self.entrada_tiempo.pack()
+        self.boton_tiempo = tk.Button(self.marco, text="Ajustar Tiempo", command=self.ajustar_tiempo, bg="#1565C0", fg="white")
+        self.boton_tiempo.pack()
+
+        self.boton_inicio = tk.Button(self.marco, text="Iniciar", command=self.iniciar, bg="#4CAF50", fg="white")
+        self.boton_inicio.pack(side=tk.LEFT)
+
+        self.boton_detener = tk.Button(self.marco, text="Detener", command=self.detener, bg="#F44336", fg="white", state=tk.DISABLED)
+        self.boton_detener.pack(side=tk.LEFT)
+
+    def ajustar_velocidad(self):
+        self.vel_inicial = -1 * float(self.entrada_velocidad.get())
+        if self.pelota is not None:
+            self.pelota.vel_inicial = self.vel_inicial
+        self.etiqueta_velocidad.config(text="Velocidad: {:.2f} m/s".format(self.vel_inicial))
+
+    def ajustar_altura(self):
+        altura = -1 * float(self.entrada_altura.get())
+        if self.pelota is not None:
+            self.pelota.y = altura
+        self.etiqueta_altura.config(text="Altura: {:.2f} m".format(altura))
+
+    def ajustar_tiempo(self):
+        self.tiempo_inicio = time.time() - float(self.entrada_tiempo.get())
+        self.etiqueta_tiempo.config(text="Tiempo: {:.2f} s".format(float(self.entrada_tiempo.get())))
+
+    def iniciar(self):
+        if self.pelota is None:
+            self.pelota = Pelota(self.lienzo, self.velocidad, self.alturas, self.vel_inicial, self.tiempos)
+        self.en_ejecucion = True
+        self.actualizar_botones()
+        self.actualizar()
+
+    def detener(self):
+        if self.pelota is not None:
+            self.pelota.detener()
+        self.en_ejecucion = False
+        self.actualizar_botones()
+
+    def actualizar_botones(self):
+        if self.en_ejecucion:
+            self.boton_inicio.config(state=tk.DISABLED)
+            self.boton_detener.config(state=tk.NORMAL)
+        else:
+            self.boton_inicio.config(state=tk.NORMAL)
+            self.boton_detener.config(state=tk.DISABLED)
+
+    def actualizar(self):
+        if self.en_ejecucion:
+            self.pelota.actualizar()
+            self.actualizar_etiquetas()
+            self.root.after(10, self.actualizar)
+
+    def actualizar_etiquetas(self):
+        if self.pelota is not None:
+            self.etiqueta_velocidad.config(text="Velocidad: {:.2f} m/s".format(self.pelota.velocidad))
+            self.etiqueta_altura.config(text="Altura: {:.2f} m".format(self.pelota.y))
+            tiempo_actual = time.time()
+            tiempo_transcurrido = tiempo_actual - self.pelota.tiempo_inicio
+            self.etiqueta_tiempo.config(text="Tiempo: {:.2f} s".format(tiempo_transcurrido))
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = App(root)
+    root.mainloop()
 
 
