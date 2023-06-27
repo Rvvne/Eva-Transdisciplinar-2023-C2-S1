@@ -17,6 +17,13 @@ Algebra
 ## Como se resuelve:
 A base de ecuaciones  usango h que es la altura o posicion del objeto , g que es la aceleracion  de la gravedad  y con t que seria el tiempo transcurrido. Eso seria en reglas generales.
 
+## Formula General:
+ ## h=vt−1/2gt2+H
+donde 'h' seria la altura , 'v' es la velocidad inicial en metros por segundo que se le aplica al cuerpo, 'g' es la aceleración de la gravedad y su valor al nivel del mar es 9.8 m/s^2, t es el tiempo en segundos desde que inicia el movimiento.
+se obtiene una ecuación cuadrática de la forma: #at^2+bt+c=0
+
+
+
 ## Aplicaciones:  
 Python usando diferentes librerias que serian Tkinter y Pygame.
 
@@ -29,3 +36,6 @@ Ingresar por el sisbolo de sistema y ejecutar el comando que trae  para descarga
 
 link video: https://drive.google.com/file/d/1kTrGbOm4-Irb7gzSPNPSjbuYm-F_3kxN/view?usp=drive_link
 link Imagen al ejecutar el codigo, (En la grabacion no mostraba la ejecucion del codigo): https://drive.google.com/file/d/1wbVg3jmlSZeUSRrGfx9cVc-BWwB8A0gm/view?usp=drive_link
+
+## Conclusion: 
+Para dar conclusion de este proyecto definimos y aprendimos mas sobre la ciada libre, aprendimos aplicar un poco la fisica en la programacion junto a diversas librerias para poder realizar la iterfaz 
