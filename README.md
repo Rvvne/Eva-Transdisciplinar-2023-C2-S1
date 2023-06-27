@@ -2,7 +2,7 @@
 ## Nombre Proyect: C2-S1
 
 ## Descripcion: 
-El proye consiste en crear un programa que simule un movimiento fisico , denominado Caida Libre la cual se interpreta a base de diversas funciones de programacion.
+El proyecto consiste en crear un programa que simule un movimiento fisico , denominado Caida Libre la cual se interpreta a base de diversas funciones de programacion.
 
 ## Evento Fisico: Caida Libre
 
