@@ -18,7 +18,8 @@ Algebra
 A base de ecuaciones  usango h que es la altura o posicion del objeto , g que es la aceleracion  de la gravedad  y con t que seria el tiempo transcurrido. Eso seria en reglas generales.
 
 ## Formula General:
- ## h=vt−1/2gt2+H
+ ## y = y0 + v0t + 0.5 at²
+ ## v = v0 + a * t
 donde 'h' seria la altura , 'v' es la velocidad inicial en metros por segundo que se le aplica al cuerpo, 'g' es la aceleración de la gravedad y su valor al nivel del mar es 9.8 m/s^2, t es el tiempo en segundos desde que inicia el movimiento y 'H' es la altura a la que se deja caer el cuerpo. Al proporcionar un valor específico para la función altura 'h'.
 se obtiene una ecuación cuadrática de la forma: #at^2+bt+c=0
 formula para calcular la velocidad en la caida libre : 
