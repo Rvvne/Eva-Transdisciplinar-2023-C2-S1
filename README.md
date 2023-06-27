@@ -28,7 +28,7 @@ donde  'g' es la fuerza gravitatoria y 't' es el tiempo de caida en segundos
 
 
 ## Aplicaciones:  
-Python usando diferentes librerias que serian Tkinter y Pygame.
+Python usando diferentes librerias que serian Tkinter, time y MatPlotLib.
 
 Programacion
 ## Herramientas Utiizadas: 
