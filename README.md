@@ -35,7 +35,7 @@ Programacion
 Usando la biblioteca Pygame para haver la interfaz grafica del proyecto.
 
 ## Guia de Instalacion: 
-Ingresar por el sisbolo de sistema y ejecutar el comando que trae  para descargar la librerias correspondientes.
+Ingresar por el simbolo de sistema y ejecutar el comando que trae  para descargar la librerias correspondientes.
 
 link video: https://drive.google.com/file/d/14h3C6BstnvAN9b9KJ823Msgux42xF7_K/view?usp=drive_link
 link Imagen al ejecutar el codigo, (En la grabacion no mostraba la ejecucion del codigo): 
