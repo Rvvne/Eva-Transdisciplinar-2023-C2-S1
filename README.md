@@ -38,7 +38,8 @@ Usando la biblioteca Pygame para haver la interfaz grafica del proyecto.
 Ingresar por el simbolo de sistema y ejecutar el comando que trae  para descargar la librerias correspondientes.
 
 link video: https://drive.google.com/file/d/14h3C6BstnvAN9b9KJ823Msgux42xF7_K/view?usp=drive_link
-link Imagen al ejecutar el codigo, (En la grabacion no mostraba la ejecucion del codigo): 
+link Imagen al ejecutar el código, (En la grabación no mostraba la ejecución del código): 
 https://drive.google.com/file/d/1LmfhpQ5A4qaVCBCuYiAAZUWrw48XZAuO/view?usp=drive_link
+https://drive.google.com/file/d/1Hauc_B4bOWi1OITx_EFWBRNrRvnp8Jak/view?usp=drive_link (explicación y ejecución de código)
 ## Conclusion: 
 Para dar conclusion de este proyecto definimos y aprendimos mas sobre la ciada libre, aprendimos aplicar un poco la fisica en la programacion junto a diversas librerias para poder realizar la iterfaz 
